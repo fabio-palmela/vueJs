@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<head>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        <p> {{contador}}</p>
+        <button type="button" v-on:click="soma(9, $event)">Somar</button>
+        <p v-on:mousemove="atualizaMousePosition">Mouse: {{x}} e {{y}}
+            <span v-on:mousemove.stop="">Parar de propagar</span>
+        </p>
+        <a v-on:click.prevent="alertChangeEvent()" href="https://www.google.com" target="_blank">Google</a>
+    </div>
+    <script>
+        new Vue({
+            el: '#app',
+            data: {
+                contador: 0,
+                x: 0,
+                y: 0
+            },
+            methods: {
+                soma(passo, event){
+                    console.log(event)
+                    this.contador += passo
+                },
+                atualizaMousePosition(e){
+                    this.x = e.clientX
+                    this.y = e.clientY
+                },
+                alertChangeEvent(){
+                    alert('O modificador de eventos bloqueou a abertura do link.');
+                }
+            }
+        });
+    </script>
+</body> 
+</html>

@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<head>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+
+</head>
+<body>
+    <div id="app">
+        <div class="container">   
+            
+          <div class="mb-3 row">
+            <div class="col-sm-3">
+              <label for="inputPassword" class="col-sm-12 col-form-label">Saldo Devedor</label>
+              <input v-model="saldoDevedor" type="number" class="form-control" id="inputPassword">
+            </div>
+            <div class="col-sm-3">
+              <label for="inputPassword" class="col-sm-2 col-form-label">Parcelas</label>
+              <input v-model="parcelas"  min="0" max="15" type="number" class="form-control" id="inputPassword">
+            </div>
+            <div class="col-sm-3">
+              <label for="inputPassword" class="col-sm-2 col-form-label">Juros</label>
+              <input v-bind:value="juros"  type="number" class="form-control" id="inputPassword" value="1.5" disabled>
+            </div>
+            
+        </div>
+        <div class="mb-3 row right">
+            <div class="col-sm-3">
+
+                <button v-on:click="calcularPrice" type="button" class="orm-control btn btn-secondary">Calcular</button>
+            </div>
+
+          </div>
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th scope="col">Prestação</th>
+                <th scope="col">Juros</th>
+                <th scope="col">Amortização</th>
+                <th scope="col">Saldo Devedor</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr v-for="item in prestacoes">
+                <td>{{item.prestacao}}</td>
+                <td>{{item.juros}}</td>
+                <td>{{item.amortizacao}}</td>
+                <td>{{item.saldoDevedor}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
+    <script>
+        new Vue({
+            el: '#app',
+            data: {
+                juros: 1.5,
+                saldoDevedor: 30000,
+                parcelas: 12,
+                prestacoes: [
+                    {
+                        juros: "",
+                        saldoDevedor: '30.000,00',
+                        amortizacao: "",
+                        prestacao: ""
+                    }
+                ],
+                ultima: {
+                    juros: 1.5,
+                    saldoDevedor: 30000,
+                    amortizacao: 0,
+                    prestacao: 0
+                }
+            },
+            computed: {
+
+            },
+            watch: {
+
+            },
+            methods: {
+                
+                calcularPrice(){
+                    var valorPrestacao  = this.calculaPrestacao()
+                    for (var i = 0; i < this.parcelas; i++){
+                        var juros = (this.ultima.saldoDevedor * (this.juros / 100)).toFixed(2)
+                        var amortizacao = valorPrestacao - juros
+                        var saldoDevedorAtual = this.ultima.saldoDevedor - amortizacao
+                        var novaPrestacao = {
+                            juros: juros,
+                            saldoDevedor: saldoDevedorAtual.toFixed(2),
+                            amortizacao: amortizacao.toFixed(2),
+                            prestacao: valorPrestacao
+                        }
+                         this.prestacoes.push(novaPrestacao)
+                         this.ultima = novaPrestacao
+                    }
+                },
+                calculaJuros(){
+                
+                },
+                calculaPrestacao(){
+                    var saldoDevedor = 30000;
+                    var parcelas = 12;
+                    var juros = 1.5;
+                    var prestacao = (saldoDevedor) * ((Math.pow((1 + (juros/100)), parcelas) * (juros/100))/(Math.pow((1 + (juros/100)), parcelas) - 1));
+                    return prestacao.toFixed(2);
+                },
+                calculaSaldoDevedor(){
+
+                }
+            }
+        });
+    </script>
+</body> 
+</html>

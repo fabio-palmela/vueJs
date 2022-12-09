@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<head>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        <p> Digite o número e encontre a potência pressionando as teclas  ctrl + enter</p>
+        <input type="number" v-on:keyup.enter.ctrl="calcularPotencia"/>
+        <p v-show="potencia"> A potência de {{number}} é {{potencia}}.</p>
+    </div>
+    <script>
+        new Vue({
+            el: '#app',
+            data: {
+                contador: 0,
+                potencia: null,
+                number: null
+            },
+            methods: {
+                calcularPotencia(event){
+                    number = event.target.value;
+                    potencia = number * number;
+                    alert(`A potência de ${number} é ${potencia}.`);
+                    this.number = number;
+                    this.potencia = potencia;
+                }
+            }
+        });
+    </script>
+</body> 
+</html>

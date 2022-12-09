@@ -1,0 +1,32 @@
+<script src="https://unpkg.com/vue@2"></script>
+
+<style>
+    #app{
+        display: flex;
+        justify-content: space-around;
+    }
+    .demo{
+        width: 100px;
+        height: 100px;
+        background-color: blue;
+    }
+
+    .c1 {
+        background-color: red;
+    }
+</style>
+<div id="app">     
+    <div class="demo" :class="{c1: altColor}" @click="altColor = !altColor"></div>
+    <div class="demo"></div>
+    <div class="demo"></div>
+
+</div>
+<script>
+    
+    new Vue({
+    el: '#app',
+    data: {
+        altColor: false
+    }
+});
+</script>

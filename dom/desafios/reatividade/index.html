@@ -1,0 +1,13 @@
+
+<div id="app">
+    <p v-once>{{nome}}, {{idade}} anos</p>
+    <p>{{idade_vezes_tres()}} anos</p>
+    <p>Número: {{randomico()}} </p>
+    <div>
+        <input type="text" v-bind:value="nome">
+        <img v-bind:src="burro" height="400">
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+<script src="app.js"></script>

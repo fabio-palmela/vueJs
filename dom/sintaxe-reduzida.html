@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<head>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        <p> {{contador}}</p>
+        <p v-once>v-once {{contador}}</p>
+        <button type="button" @click="soma">Somar</button>
+        <input type="text" v-bind:value="contador"/>
+        <input type="text" :value="contador"/>
+    </div>
+    <script>
+        new Vue({
+            el: '#app',
+            data: {
+                contador: 0
+            },
+            methods: {
+                soma(event){
+                    return this.contador++
+                }
+            }
+        });
+    </script>
+</body> 
+</html>
